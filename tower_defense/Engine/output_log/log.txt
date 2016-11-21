@@ -1,0 +1,12 @@
+-2
+-2
+../Engine/data/stone01.tga
+2
+2
+../Engine/data/mario.png
+-2
+2
+../Engine/data/stone01.tga
+2
+-2
+../Engine/data/mario.png
