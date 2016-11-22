@@ -13,7 +13,7 @@ public:
 	Engine(const Engine&);
 	~Engine();
 
-	bool Initialize();
+	bool Initialize(int);
 	void Shutdown();
 	void Run();
 
@@ -24,7 +24,6 @@ private:
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
 	void drawText(ID3D11Device *pDevice, ID3D11DeviceContext *pContext);
-private:
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hinstance;
 	HWND m_hwnd;
@@ -36,6 +35,7 @@ private:
 
 	int screenWidth;
 	int screenHeight;
+	int level_number;
 };
 
 // FUNCTION PROTOTYPES //

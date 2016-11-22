@@ -1,10 +1,10 @@
 #include "Engine.h"
 
-//nothing
 Engine::Engine()
 {
 	m_Input = 0;
 	m_Graphics = 0;
+	level_number = 1;
 }
 
 
@@ -18,7 +18,7 @@ Engine::~Engine()
 }
 
 
-bool Engine::Initialize()
+bool Engine::Initialize(int level_number)
 {
 	bool result;
 
@@ -53,11 +53,10 @@ bool Engine::Initialize()
 	if (!objManager) return false;
 
 	//initialize object manager with the first level
-	int level_number = 1;
 	result = objManager->initialize(m_Direct3D, level_number);
 	if (!result) return false;
 
-	// Create the graphics object.  This object will handle rendering all the graphics for this application.
+	// Create the graphics object. This object will handle rendering all the graphics for this application.
 	m_Graphics = new Graphics;
 	if(!m_Graphics)	return false;
 
@@ -176,6 +175,17 @@ bool Engine::Frame(ObjectManager * objManager)
 	if (m_Input->IsKeyDown(VK_LEFT))
 	{
 		objManager->getPlayer()->getModel()->changePosition(XMFLOAT3(-0.1f * objManager->getPlayer()->getModel()->getSpeedRatio(), 0, 0));
+	}
+	//conditions for new level or previous level
+	if (m_Input->IsKeyDown(0x4E)) //N key, as in Next
+	{
+		this->level_number += 1;
+		Initialize(this->level_number);
+	}
+	if (m_Input->IsKeyDown(0x50)) //P key as in Previous
+	{
+		this->level_number -= 1;
+		Initialize(this->level_number);
 	}
 
 	// Do the frame processing for the graphics object.
