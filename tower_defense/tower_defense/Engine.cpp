@@ -176,16 +176,17 @@ bool Engine::Frame(ObjectManager * objManager)
 	{
 		objManager->getPlayer()->getModel()->changePosition(XMFLOAT3(-0.1f * objManager->getPlayer()->getModel()->getSpeedRatio(), 0, 0));
 	}
-	//conditions for new level or previous level
+	
+	//conditions for new level or previous level, tests with key down for now
 	if (m_Input->IsKeyDown(0x4E)) //N key, as in Next
 	{
 		this->level_number += 1;
-		Initialize(this->level_number);
+		if(!Initialize(this->level_number)) return false;
 	}
 	if (m_Input->IsKeyDown(0x50)) //P key as in Previous
 	{
 		this->level_number -= 1;
-		Initialize(this->level_number);
+		if (!Initialize(this->level_number)) return false;
 	}
 
 	// Do the frame processing for the graphics object.

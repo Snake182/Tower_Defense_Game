@@ -25,7 +25,7 @@ bool ObjectManager::initialize(D3D * d3d, int level_number)
 	//create and initialize the level object
 	level = new Level();
 	if (!level) return false;
-	level->Initialize(level_number);
+	if(!level->Initialize(level_number)) return false;
 	this->setModels(level->getModels());
 
 	//create and initialize the player object

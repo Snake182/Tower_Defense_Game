@@ -9,9 +9,9 @@ Level::~Level()
 {
 }
 
-void Level::Initialize(int level_number)
+bool Level::Initialize(int level_number)
 {
-	createDecor(level_number);
+	return createDecor(level_number);
 }
 
 

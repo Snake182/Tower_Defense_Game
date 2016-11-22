@@ -7,7 +7,7 @@ class Level
 public:
 	Level();
 	~Level();
-	void Initialize(int);
+	bool Initialize(int);
 	bool createDecor(int);
 	vector<Model*> createModels(vector<tuple<float, float, float, char*>> modelsPositions);
 	vector<Model *> getModels() { return this->models; }
