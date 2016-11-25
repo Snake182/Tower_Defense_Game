@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <models>
-	<model posHorizontal="-2.5" posVertical="-2.5" size="0.2" textureFile="../Engine/image_data/stone01.tga"/>
-	<model posHorizontal="2.5"  posVertical="2.5"  size="0.2" textureFile="../Engine/image_data/stone01.tga"/>
-	<model posHorizontal="-2.5" posVertical="2.5"  size="0.2" textureFile="../Engine/image_data/stone01.tga"/>
-	<model posHorizontal="2.5"  posVertical="-2.5" size="0.2" textureFile="../Engine/image_data/stone01.tga"/>
+	<model posHorizontal="0" posVertical="0" size="1" textureFile="../Engine/image_data/background_level2.jpg"/>
+	<model posHorizontal="-2.5" posVertical="-2.5" size="0.5" textureFile="../Engine/image_data/stone_level2.jpg"/>
+	<model posHorizontal="2.5"  posVertical="2.5"  size="0.5" textureFile="../Engine/image_data/stone_level2.jpg"/>
+	<model posHorizontal="-2.5" posVertical="2.5"  size="0.5" textureFile="../Engine/image_data/stone_level2.jpg"/>
+	<model posHorizontal="2.5"  posVertical="-2.5" size="0.5" textureFile="../Engine/image_data/stone_level2.jpg"/>
 </models>

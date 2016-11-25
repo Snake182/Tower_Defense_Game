@@ -4,6 +4,7 @@ ObjectManager::ObjectManager()
 {
 	level = 0;
 	player = 0;
+	m_Camera = 0;
 }
 
 
@@ -48,7 +49,6 @@ bool ObjectManager::initialize(D3D * d3d, int level_number)
 		}
 	}
 
-	
 	return true;
 }
 

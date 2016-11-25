@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<player posHorizontal="0.5" posVertical="0.5" size="0.5" textureFile="../Engine/image_data/mario.png" speed_ratio="2.5"/>
+<player posHorizontal="0.5" posVertical="0.5" size="0.4" textureFile="../Engine/image_data/mario.png" speed_ratio="1.2"/>

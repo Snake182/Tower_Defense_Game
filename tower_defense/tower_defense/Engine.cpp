@@ -64,9 +64,6 @@ bool Engine::Initialize(int level_number)
 	result = m_Graphics->Initialize(m_Direct3D);
 	if(!result)	return false;
 
-	//draw text
-	this->drawText(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext());
-
 	return true;
 }
 
@@ -162,7 +159,8 @@ bool Engine::Frame(ObjectManager * objManager)
 	// player movement.
 	if (m_Input->IsKeyDown(VK_UP))
 	{
-		objManager->getPlayer()->getModel()->changePosition(XMFLOAT3(0, 0.1f * objManager->getPlayer()->getModel()->getSpeedRatio(), 0));
+		objManager->getPlayer()->getModel()->changePosition(XMFLOAT3(0, 0.1f * objManager->getPlayer()->getModel()->getSpeedRatio(), 0));//ugly.. to change!!
+		//have the background move backward for the moving instead?
 	}
 	if (m_Input->IsKeyDown(VK_RIGHT))
 	{
@@ -187,6 +185,12 @@ bool Engine::Frame(ObjectManager * objManager)
 	{
 		this->level_number -= 1;
 		if (!Initialize(this->level_number)) return false;
+	}
+
+	//draw text on key down
+	if (m_Input->IsKeyDown(0x54)) //T key, as in Text
+	{
+		this->drawText(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext());
 	}
 
 	// Do the frame processing for the graphics object.
@@ -243,7 +247,7 @@ void Engine::InitializeWindows(int& screenWidth, int& screenHeight)
 	m_hinstance = GetModuleHandle(NULL);
 
 	// Give the application a name.
-	m_applicationName = L"Engine";
+	m_applicationName = L"Tower Defense";
 
 	// Setup the windows class with default settings.
 	wc.style         = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;

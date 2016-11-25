@@ -106,11 +106,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Engine\texture.ps">
-      <Filter>Pixel shaders</Filter>
-    </None>
-    <None Include="..\Engine\texture.vs">
+    <None Include="..\Engine\shaders\texture.vs">
       <Filter>Vertex shaders</Filter>
+    </None>
+    <None Include="..\Engine\shaders\texture.ps">
+      <Filter>Pixel shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
