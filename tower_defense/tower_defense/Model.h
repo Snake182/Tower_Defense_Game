@@ -5,19 +5,20 @@
 
 template <typename T, unsigned S>
 inline unsigned arraysize(const T(&v)[S]) { return S; }
+static const float SCREEN_RATIO = 142.85;
 
 class Model
 {
 
 public:
-	Model(float, float, float, char*); //for unanimated objects
-	Model(float, float, float, float, char*); //for animated objects
+	Model(float, float, float, int, char*); //for unanimated objects
+	Model(float, float, float, float, int, char*); //for animated objects
 	Model(const Model&);
 	Model();
 	~Model();
 
 	//game loop functions
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
@@ -27,6 +28,7 @@ public:
 	float getPosVertical() { return this->m_posVertical; }
 	float getSpeedRatio() { return this->m_speed_ratio; }
 	float getSize() { return this->m_size; }
+	float getIsFullScreen() { return this->m_is_full_screen; }
 	XMFLOAT3 getPosition() { return this->position; }
 	char* getFilename() { return this->m_filename; }
 	XMMATRIX getModelMatrix(XMMATRIX, XMMATRIX, XMMATRIX);
@@ -35,6 +37,7 @@ public:
 	void setPosHorizontal(float posHorizontal) { this->m_posHorizontal = posHorizontal; }
 	void setPosVertical(float posVertical) { this->m_posVertical = posVertical;	}
 	void setSize(float size) { this->m_size = size;	}
+	void setIsFullScreen(int is_full_screen) { this->m_is_full_screen = is_full_screen; }
 	void setSpeedRatio(float speed_ratio) {	this->m_speed_ratio = speed_ratio; }
 	void setFilename(char* filename) { this->m_filename = filename; }
 
@@ -54,8 +57,11 @@ private:
 	float m_posVertical;
 	float m_size;
 	float m_speed_ratio;
+	int m_is_full_screen;
 	char* m_filename;
 	Texture* m_Texture;
+	int m_screenWidth;
+	int m_screenHeight;
 
 	XMFLOAT3 position;
 };

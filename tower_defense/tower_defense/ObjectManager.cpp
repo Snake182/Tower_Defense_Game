@@ -12,7 +12,7 @@ ObjectManager::~ObjectManager()
 {
 }
 
-bool ObjectManager::initialize(D3D * d3d, int level_number)
+bool ObjectManager::initialize(D3D * d3d, int level_number, int screenWidth, int screenHeight)
 {
 	bool result;
 
@@ -41,7 +41,7 @@ bool ObjectManager::initialize(D3D * d3d, int level_number)
 	// Create and initialize the model objects.
 	for (int i = 0; i < this->models.size(); i++) {
 
-		result = this->models.at(i)->Initialize(d3d->GetDevice(), d3d->GetDeviceContext(), this->models.at(i)->getFilename());
+		result = this->models.at(i)->Initialize(d3d->GetDevice(), d3d->GetDeviceContext(), this->models.at(i)->getFilename(), screenWidth, screenHeight);
 		if (!result)
 		{
 			MessageBox(NULL, L"Could not initialize the model object.", L"Error", MB_OK);

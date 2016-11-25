@@ -9,7 +9,7 @@ public:
 	~Level();
 	bool Initialize(int);
 	bool createDecor(int);
-	vector<Model*> createModels(vector<tuple<float, float, float, char*>> modelsPositions);
+	vector<Model*> createModels(vector<tuple<float, float, float, int, char*>> modelsPositions);
 	vector<Model *> getModels() { return this->models; }
 private:
 	vector<Model *> models;

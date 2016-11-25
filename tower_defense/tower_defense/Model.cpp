@@ -1,7 +1,7 @@
 #include "model.h"
 
 
-Model::Model(float posHorizontal, float posVertical, float size, char* filename)
+Model::Model(float posHorizontal, float posVertical, float size, int is_full_screen, char* filename)
 {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
@@ -9,13 +9,14 @@ Model::Model(float posHorizontal, float posVertical, float size, char* filename)
 	m_posHorizontal = posHorizontal;
 	m_posVertical = posVertical;
 	m_size = size;
+	m_is_full_screen = is_full_screen;
 	m_filename = filename;
 	position.x = 0;
 	position.y = 0;
 	position.z = 0;
 }
 
-Model::Model(float posHorizontal, float posVertical, float size, float speed_ratio, char* filename)
+Model::Model(float posHorizontal, float posVertical, float size, float speed_ratio, int is_full_screen, char* filename)
 {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
@@ -23,6 +24,7 @@ Model::Model(float posHorizontal, float posVertical, float size, float speed_rat
 	m_posHorizontal = posHorizontal;
 	m_posVertical = posVertical;
 	m_size = size;
+	m_is_full_screen = is_full_screen;
 	m_filename = filename;
 	m_speed_ratio = speed_ratio;
 	position.x = 0;
@@ -39,16 +41,15 @@ Model::Model()
 {
 }
 
-
 Model::~Model()
 {
 }
 
-
-bool Model::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFilename)
+bool Model::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFilename, int screenWidth, int screenHeight)
 {
 	bool result;
-
+	m_screenWidth = screenWidth;
+	m_screenHeight = screenHeight;
 
 	// Initialize the vertex and index buffers.
 	result = InitializeBuffers(device);
@@ -133,26 +134,55 @@ bool Model::InitializeBuffers(ID3D11Device* device)
 		return false;
 	}
 
-	// Load the vertex array with data.
-	//triangle 1
-	vertices[0].position = XMFLOAT3(-m_size + m_posHorizontal, -m_size + m_posVertical, 0.0f);  // Bottom left.
-	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
+	//enables squared objects by size
+	if (m_is_full_screen == 0) {
+		// Load the vertex array with data.
+		//triangle 1
+		vertices[0].position = XMFLOAT3(-m_size + m_posHorizontal, -m_size + m_posVertical, 0.0f);  // Bottom left.
+		vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
 
-	vertices[1].position = XMFLOAT3(-m_size + m_posHorizontal, m_size + m_posVertical, 0.0f);  // Top left.
-	vertices[1].texture = XMFLOAT2(0.0f, 0.0f);
+		vertices[1].position = XMFLOAT3(-m_size + m_posHorizontal, m_size + m_posVertical, 0.0f);  // Top left.
+		vertices[1].texture = XMFLOAT2(0.0f, 0.0f);
 
-	vertices[2].position = XMFLOAT3(m_size + m_posHorizontal, m_size + m_posVertical, 0.0f);  // Top Right.
-	vertices[2].texture = XMFLOAT2(1.0f, 0.0f);
+		vertices[2].position = XMFLOAT3(m_size + m_posHorizontal, m_size + m_posVertical, 0.0f);  // Top Right.
+		vertices[2].texture = XMFLOAT2(1.0f, 0.0f);
 
-	//triangle 2
-	vertices[3].position = XMFLOAT3(m_size + m_posHorizontal, m_size + m_posVertical, 0.0f);  // Top Right.
-	vertices[3].texture = XMFLOAT2(1.0f, 0.0f);
+		//triangle 2
+		vertices[3].position = XMFLOAT3(m_size + m_posHorizontal, m_size + m_posVertical, 0.0f);  // Top Right.
+		vertices[3].texture = XMFLOAT2(1.0f, 0.0f);
 
-	vertices[4].position = XMFLOAT3(m_size + m_posHorizontal, -m_size + m_posVertical, 0.0f);  // Bottom Right.
-	vertices[4].texture = XMFLOAT2(1.0f, 1.0f);
+		vertices[4].position = XMFLOAT3(m_size + m_posHorizontal, -m_size + m_posVertical, 0.0f);  // Bottom Right.
+		vertices[4].texture = XMFLOAT2(1.0f, 1.0f);
 
-	vertices[5].position = XMFLOAT3(-m_size + m_posHorizontal, -m_size + m_posVertical, 0.0f);  // Bottom left.
-	vertices[5].texture = XMFLOAT2(0.0f, 1.0f);
+		vertices[5].position = XMFLOAT3(-m_size + m_posHorizontal, -m_size + m_posVertical, 0.0f);  // Bottom left.
+		vertices[5].texture = XMFLOAT2(0.0f, 1.0f);
+	}
+	else {
+		float full_width = m_screenWidth / SCREEN_RATIO;
+		float full_height = m_screenHeight / SCREEN_RATIO;
+		
+		// Load the vertex array with data.
+		//triangle 1
+		vertices[0].position = XMFLOAT3(-full_width + m_posHorizontal, -full_height + m_posVertical, 0.0f);  // Bottom left.
+		vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
+
+		vertices[1].position = XMFLOAT3(-full_width + m_posHorizontal,  full_height + m_posVertical, 0.0f);  // Top left.
+		vertices[1].texture = XMFLOAT2(0.0f, 0.0f);
+
+		vertices[2].position = XMFLOAT3( full_width + m_posHorizontal,  full_height + m_posVertical, 0.0f);  // Top Right.
+		vertices[2].texture = XMFLOAT2(1.0f, 0.0f);
+
+		//triangle 2
+		vertices[3].position = XMFLOAT3( full_width + m_posHorizontal,  full_height + m_posVertical, 0.0f);  // Top Right.
+		vertices[3].texture = XMFLOAT2(1.0f, 0.0f);
+
+		vertices[4].position = XMFLOAT3( full_width + m_posHorizontal, -full_height + m_posVertical, 0.0f);  // Bottom Right.
+		vertices[4].texture = XMFLOAT2(1.0f, 1.0f);
+
+		vertices[5].position = XMFLOAT3(-full_width + m_posHorizontal, -full_height + m_posVertical, 0.0f);  // Bottom left.
+		vertices[5].texture = XMFLOAT2(0.0f, 1.0f);
+	}
+	
 
 	// Load the index array with data.
 	for (int i = 0; i < index_count; i++) {
@@ -287,22 +317,25 @@ void Model::RenderBuffers(ID3D11DeviceContext* deviceContext)
 }
 
 //change position to the new one by checking if it doesn't exit the window
-void Model::changePosition(XMFLOAT3 direction/*, int screenWidth, int screenHeight*/)
+void Model::changePosition(XMFLOAT3 direction)
 {
-	/*float x = this->position.x;
+	//need to debug these two!! Draw text ...
+	float full_width = m_screenWidth / SCREEN_RATIO;
+	float full_height = m_screenHeight / SCREEN_RATIO;
+
+	float x = this->position.x;
 	float y = this->position.y;
+
 	float new_x = this->position.x + direction.x;
 	float new_y = this->position.y + direction.y;
 
-	if ((new_x > (-screenWidth / 2.f)) && (new_x < (screenWidth / 2.f))) {
+	if ((new_x > (-full_width)) && (new_x < (full_width - m_size))) {
 		x = new_x;
 	}
-	if ((new_y > (-screenHeight / 2.f)) && (new_y < (screenHeight / 2.f))) {
+	if ((new_y > (-full_height)) && (new_y < (full_height - m_size))) {
 		y = new_y;
-	}*/
-	
-	float x = this->position.x + direction.x;
-	float y = this->position.y + direction.y;
+	}
+
 	float z = this->position.z + direction.z;
 
 	this->position = XMFLOAT3(x, y, z);

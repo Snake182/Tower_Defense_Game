@@ -9,7 +9,7 @@
 class ObjectManager
 {
 public:
-	bool initialize(D3D *, int);
+	bool initialize(D3D *, int, int, int);
 	void Shutdown();
 	ObjectManager();
 	~ObjectManager();

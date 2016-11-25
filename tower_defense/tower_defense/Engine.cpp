@@ -53,7 +53,7 @@ bool Engine::Initialize(int level_number)
 	if (!objManager) return false;
 
 	//initialize object manager with the first level
-	result = objManager->initialize(m_Direct3D, level_number);
+	result = objManager->initialize(m_Direct3D, level_number, screenWidth, screenHeight);
 	if (!result) return false;
 
 	// Create the graphics object. This object will handle rendering all the graphics for this application.

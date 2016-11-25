@@ -22,11 +22,12 @@ bool Player::Initialize()
 	float pozVertical = doc.child("player").attribute("posVertical").as_float();
 	float size = doc.child("player").attribute("size").as_float();
 	float speed_ratio = doc.child("player").attribute("speed_ratio").as_float();
+	int isFullScreen = doc.child("player").attribute("isFullScreen").as_int();
 	string textureFile = doc.child("player").attribute("textureFile").as_string();
 
 	char * c_textureFile = new char[textureFile.size() + 1];
 	std::copy(textureFile.begin(), textureFile.end(), c_textureFile);
 	c_textureFile[textureFile.size()] = '\0';
 
-	this->model = new Model(pozHorizontal, pozVertical, size, speed_ratio, c_textureFile);
+	this->model = new Model(pozHorizontal, pozVertical, size, speed_ratio, isFullScreen, c_textureFile);
 }
