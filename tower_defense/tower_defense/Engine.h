@@ -1,10 +1,10 @@
-#ifndef _SYSTEM_H_
-#define _SYSTEM_H_
+#pragma once
 
 #define WIN32_LEAN_AND_MEAN
 
 #include "input.h"
 #include "graphics.h"
+#include "TextWriter.h"
 
 class Engine
 {
@@ -23,7 +23,6 @@ private:
 	bool Frame(ObjectManager*);
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
-	void drawText(ID3D11Device *pDevice, ID3D11DeviceContext *pContext);
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hinstance;
 	HWND m_hwnd;
@@ -32,6 +31,7 @@ private:
 	Graphics* m_Graphics;
 	ObjectManager* objManager;
 	D3D* m_Direct3D;
+	TextWriter* m_textWriter;
 
 	int screenWidth;
 	int screenHeight;
@@ -43,6 +43,3 @@ static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 // GLOBALS //
 static Engine* ApplicationHandle = 0;
-
-
-#endif

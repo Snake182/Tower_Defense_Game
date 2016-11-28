@@ -5,6 +5,7 @@ Engine::Engine()
 	m_Input = 0;
 	m_Graphics = 0;
 	level_number = 1;
+	m_textWriter = 0;
 }
 
 
@@ -64,6 +65,12 @@ bool Engine::Initialize(int level_number)
 	result = m_Graphics->Initialize(m_Direct3D);
 	if(!result)	return false;
 
+	//initialize the text drawing tools
+	m_textWriter = new TextWriter();
+	if (!m_textWriter)	return false;
+	result = m_textWriter->Initialize(m_Direct3D->GetDevice());
+	if (!result) return false;
+
 	return true;
 }
 
@@ -98,6 +105,14 @@ void Engine::Shutdown()
 		m_Direct3D->Shutdown();
 		delete m_Direct3D;
 		m_Direct3D = 0;
+	}
+
+	// Release the Text Writer object.
+	if (m_textWriter)
+	{
+		m_textWriter->Shutdown();
+		delete m_textWriter;
+		m_textWriter = 0;
 	}
 
 	// Shutdown the window.
@@ -190,7 +205,7 @@ bool Engine::Frame(ObjectManager * objManager)
 	//draw text on key down
 	if (m_Input->IsKeyDown(0x54)) //T key, as in Text
 	{
-		this->drawText(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext());
+		m_textWriter->drawText(m_Direct3D->GetDeviceContext());
 	}
 
 	// Do the frame processing for the graphics object.
@@ -363,29 +378,5 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 		{
 			return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
 		}
-	}
-}
-
-void Engine::drawText(ID3D11Device *pDevice, ID3D11DeviceContext *pContext) {
-	IFW1Factory *pFW1Factory;
-	HRESULT hResult = FW1CreateFactory(FW1_VERSION, &pFW1Factory);
-
-	IFW1FontWrapper *pFontWrapper;
-	hResult = pFW1Factory->CreateFontWrapper(pDevice, L"Arial", &pFontWrapper);
-	
-	if (SUCCEEDED(hResult))
-	{
-		pFontWrapper->DrawString(
-			pContext,
-			L"Text",// String
-			128.0f,// Font size
-			100.0f,// X position
-			50.0f,// Y position
-			0xff0099ff,// Text color, 0xAaBbGgRr
-			0// Flags (for example FW1_RESTORESTATE to keep context states unchanged)
-		);
-
-		pFontWrapper->Release();
-		pFW1Factory->Release();
 	}
 }
